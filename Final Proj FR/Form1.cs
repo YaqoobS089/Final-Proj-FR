@@ -1,16 +1,24 @@
 using System.Collections;
 using System.Reflection;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Header;
 
 namespace Final_Proj_FR
 {
     public partial class Form1 : Form
     {
-        bool istrue = true;
+        bool onground = true;
         public bool jumplock = false;
         bool dino1selected;
         bool dino2selected;
         bool dino3selected;
         bool dino4selected;
+        int time1left = 0;
+        int time2left = 0;
+        bool goingup = true;
+
 
         public Form1()
         {
@@ -44,47 +52,43 @@ namespace Final_Proj_FR
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
+            if (e.KeyCode == Keys.Right) {
+                timer1.Interval -= 2;
+                if (timer1.Interval <= 2) {
+                    timer1.Interval = 3;
+                }
+            }
 
+            if (e.KeyCode == Keys.Left) 
+            {
+                timer1.Interval += 2;
+                if (timer1.Interval >= 21)
+                {
+                    timer1.Interval = 20;
+                }
+            }
 
-            if (istrue == true)
+            if (e.KeyCode == Keys.Up) {
+                if (onground == true)
+                {
+                    onground = false;
+                    time2left = 0;
+                }
+            }
+            /*if (onground == true)
             {
                 jump();
                 Thread.Sleep(50);
                 fall();
-                istrue = true;
-            }
+                onground = true;
+            }*/
 
         }
 
 
 
 
-        private void jump()
-        {
-
-            istrue = false;
-            for (int i = 0; i <= 40; i = i + 2)
-            {
-
-                Dino.Location = new Point(91, 252 - i * 2);
-                Thread.Sleep(1);
-
-
-            }
-
-        }
-        private void fall()
-        {
-            istrue = false;
-            for (int i = 0; i <= 40; i = i + 3)
-            {
-                Dino.Location = new Point(91, 172 + i * 2);
-                Thread.Sleep(1);
-
-            }
-
-
-        }
+        
 
 
         private void Shopbutton_Click(object sender, EventArgs e)
@@ -159,8 +163,23 @@ namespace Final_Proj_FR
             Shopbutton.Enabled = false;
             meteor.Visible = true;
 
-            for(int i = 0; i <= 650; i++)
+            //this.timeleft = 20;
+            //InitializeComponent();
+
+            timer1.Interval = 10;
+            timer1.Start();
+
+            timer2.Interval = 50;
+            timer2.Start();
+
+
+
+            // start things
+
+
+            for (int i = 0; i <= 650; i++)
             {
+
                 //Thread.Sleep(1);
                 meteor.Location = new Point(654 - i, 290);
             }
@@ -282,10 +301,50 @@ namespace Final_Proj_FR
         {
 
         }
-        //public static bool Selected(bool x)
-        //{
-        //
-        //    return true;
-        //}
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            time1left++;
+            int i = time1left * 2; //5 
+            meteor.Location = new Point(654 - i, 290);
+
+            if (time1left >= 360) //140
+            {
+                time1left = 0;
+                //timer1.Stop();
+            }
+        }
+
+        private void timer2_Tick(object sender, EventArgs e)
+        {
+            time2left++;
+            int i = (time2left % 21)*10;
+
+            if (onground == false)
+            {
+                if (goingup == true)
+                {
+                    Dino.Location = new Point(91, 252 - i);
+                    if (i >= 200)
+                    {
+                        goingup = false;
+                        time2left = 0;
+                    }
+                }
+                else
+                {
+                    Dino.Location = new Point(91, 52 + i);
+                    if (i >= 200)
+                    {
+                        goingup = true;
+                        onground = true;
+                    }
+                }
+            }
+           
+
+
+            
+        }
     }
 }

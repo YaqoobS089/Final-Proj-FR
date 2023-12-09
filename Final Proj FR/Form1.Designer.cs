@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             Dino = new PictureBox();
             startbutton = new Button();
             Shopbutton = new Button();
@@ -41,6 +42,8 @@
             meteor = new PictureBox();
             EXITbutton = new Button();
             warmBlueDinoSelected = new PictureBox();
+            timer1 = new System.Windows.Forms.Timer(components);
+            timer2 = new System.Windows.Forms.Timer(components);
             ((System.ComponentModel.ISupportInitialize)Dino).BeginInit();
             ((System.ComponentModel.ISupportInitialize)shopDino1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)shopDino4).BeginInit();
@@ -192,6 +195,14 @@
             warmBlueDinoSelected.TabStop = false;
             warmBlueDinoSelected.Click += warmBlueDinoSelected_Click;
             // 
+            // timer1
+            // 
+            timer1.Tick += timer1_Tick;
+            // 
+            // timer2
+            // 
+            timer2.Tick += timer2_Tick;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
@@ -242,5 +253,7 @@
         private PictureBox meteor;
         private Button EXITbutton;
         private PictureBox warmBlueDinoSelected;
+        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Timer timer2;
     }
 }
