@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             Dino = new PictureBox();
             startbutton = new Button();
             Shopbutton = new Button();
@@ -44,6 +45,8 @@
             warmBlueDinoSelected = new PictureBox();
             timer1 = new System.Windows.Forms.Timer(components);
             timer2 = new System.Windows.Forms.Timer(components);
+            label1 = new Label();
+            timer3 = new System.Windows.Forms.Timer(components);
             ((System.ComponentModel.ISupportInitialize)Dino).BeginInit();
             ((System.ComponentModel.ISupportInitialize)shopDino1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)shopDino4).BeginInit();
@@ -144,8 +147,9 @@
             // 
             // shopDino3
             // 
+            shopDino3.BackColor = SystemColors.Control;
             shopDino3.Image = Properties.Resources.unnamed_removebg_preview_removebg_preview;
-            shopDino3.Location = new Point(131, 278);
+            shopDino3.Location = new Point(131, 276);
             shopDino3.Name = "shopDino3";
             shopDino3.Size = new Size(154, 160);
             shopDino3.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -166,10 +170,13 @@
             // 
             // meteor
             // 
+            meteor.BackColor = Color.Transparent;
+            meteor.ErrorImage = null;
             meteor.Image = Properties.Resources._109593122_meteor_on_fire_cartoon_in_black_and_white_vector_illustration_graphic_design_removebg_preview;
-            meteor.Location = new Point(658, 290);
+            meteor.InitialImage = (Image)resources.GetObject("meteor.InitialImage");
+            meteor.Location = new Point(654, 290);
             meteor.Name = "meteor";
-            meteor.Size = new Size(121, 135);
+            meteor.Size = new Size(109, 96);
             meteor.SizeMode = PictureBoxSizeMode.StretchImage;
             meteor.TabIndex = 12;
             meteor.TabStop = false;
@@ -203,11 +210,23 @@
             // 
             timer2.Tick += timer2_Tick;
             // 
+            // label1
+            // 
+            label1.AccessibleName = "counter";
+            label1.AutoSize = true;
+            label1.Location = new Point(654, 17);
+            label1.Name = "label1";
+            label1.Size = new Size(59, 25);
+            label1.TabIndex = 14;
+            label1.Text = "label1";
+            label1.Click += label1_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(label1);
             Controls.Add(EXITbutton);
             Controls.Add(meteor);
             Controls.Add(warmBlueDinoSelected);
@@ -236,6 +255,7 @@
             ((System.ComponentModel.ISupportInitialize)meteor).EndInit();
             ((System.ComponentModel.ISupportInitialize)warmBlueDinoSelected).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -255,5 +275,7 @@
         private PictureBox warmBlueDinoSelected;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Timer timer2;
+        private Label label1;
+        private System.Windows.Forms.Timer timer3;
     }
 }
