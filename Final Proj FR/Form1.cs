@@ -23,6 +23,9 @@ namespace Final_Proj_FR
         int time3left = 0;
         bool goingup = true;
         bool collision = false;
+        bool gameend = false;
+        Random rnd = new Random();
+        int meteory = 0;
 
         public Form1()
         {
@@ -87,11 +90,11 @@ namespace Final_Proj_FR
                 }
             }
 
-            /*if (e.KeyCode == Keys.Up) {
+            if (e.KeyCode == Keys.Up) {
                 string imageUrl = "https://www.bing.com/th?id=OIP.wS5CrNcOrG5ZrMBqShC0kwHaEK&w=202&h=106&c=8&rs=1&qlt=90&o=6&dpr=1.5&pid=3.1&rm=2";
                 this.BackgroundImage = Image.FromStream(new MemoryStream(new WebClient().DownloadData(imageUrl)));
                 this.BackgroundImageLayout = ImageLayout.Stretch;
-            }*/
+            }
 
             if (e.KeyCode == Keys.Space)
             {
@@ -103,12 +106,12 @@ namespace Final_Proj_FR
             }
 
 
-            /*if (e.KeyCode == Keys.Down)
+            if (e.KeyCode == Keys.Down)
             {
                 string imageUrl = "https://www.bing.com/th?id=OIP.LawtQ0iqcSsMToaLokvLUgHaEK&w=200&h=106&c=8&rs=1&qlt=90&o=6&dpr=1.5&pid=3.1&rm=2";
                 this.BackgroundImage = Image.FromStream(new MemoryStream(new WebClient().DownloadData(imageUrl)));
                 this.BackgroundImageLayout = ImageLayout.Stretch;
-            }*/
+            }
             /*if (onground == true)
             {
                 jump();
@@ -202,14 +205,14 @@ namespace Final_Proj_FR
             //this.timeleft = 20;
             //InitializeComponent();
 
-            timer1.Interval = 30;
+            timer1.Interval = 3;
             timer1.Start();
 
-            timer2.Interval = 45;
+            timer2.Interval = 20;
             timer2.Start();
 
-            timer3.Interval = 50;
-            timer3.Start(); 
+            timer3.Interval = 1000;
+            timer3.Start();
 
             // start things
 
@@ -324,8 +327,8 @@ namespace Final_Proj_FR
             EXITbutton.Visible = false;
             Shopbutton.Visible = true;
             startbutton.Visible = true;
-
             Dino.Location = new Point(91, 252);
+            meteor.Location = new Point(654, 290);
         }
 
         public void brownDinoSelected_Click(object sender, EventArgs e)
@@ -340,15 +343,25 @@ namespace Final_Proj_FR
 
         private void timer1_Tick(object sender, EventArgs e)
         {
+            
+            
+            if (gameend)
+                return;
+
             time1left++;
             int i = time1left * 5; //5 
-            meteor.Location = new Point(654 - i, 290);
+            if (gameend == false)
+                meteor.Location = new Point(654 - i, 290 - meteory);
+
             if (meteor.Bounds.IntersectsWith(Dino.Bounds))
+            {
                 collision = true;
+            }
 
             if (time1left >= 140) //140
             {
                 time1left = 0;
+                meteory = rnd.Next(1, 50);
                 //timer1.Stop();
             }
 
@@ -356,6 +369,14 @@ namespace Final_Proj_FR
 
         private void timer2_Tick(object sender, EventArgs e)
         {
+            if (meteor.Bounds.IntersectsWith(Dino.Bounds))
+            {
+                collision = true;
+
+            }
+
+            if (gameend)
+                return;
             time2left++;
             int i = (time2left % 21) * 10;
 
@@ -381,44 +402,88 @@ namespace Final_Proj_FR
                     }
                 }
             }
-
-
-
-
         }
+
         private void timer3_Tick(object sender, EventArgs e)
         {
             time3left++;
-            label1.Text = "Time elapsed: " +  time3left;
-            if (collision == true)
+            if (gameend == false)
+                label1.Text = "Time elapsed: " + time3left;
+
+            if (collision == true && gameend == false)
             {
+                gameend = true;
                 //MessageBox.Show("You loose!");
                 //this.Close();
 
                 // Console app
-                System.Environment.Exit(1);
+                //System.Environment.Exit(1);
                 if (time3left <= 2)
-                    MessageBox.Show("Congradulation");
+                    MessageBox.Show("You are Bronze rank!");
 
                 else if (time3left <= 4)
+                {
                     MessageBox.Show("You are Silver rank!");
+                    //Application.ExitThread();
+                }
+
 
                 else if (time3left <= 6)
+                {
                     MessageBox.Show("You are Gold rank!");
+                    //Application.ExitThread();
+                }
 
                 else if (time3left <= 8)
+                {
                     MessageBox.Show("You are Platinum rank!");
+                    //Application.ExitThread();
+                }
 
                 else if (time3left <= 10)
+                {
                     MessageBox.Show("You are Legendary rank!");
+                    //Application.ExitThread();
+                }
 
                 else if (time3left >= 10)
+                {
                     MessageBox.Show("You are Icon rank!");
+                    //Application.ExitThread();
+                }
+                Dino.Visible = false;
+                meteor.Visible = false;
+                label1.Visible = false;
+                Shopbutton.Visible = true;
+                Shopbutton.Enabled = true;
+                startbutton.Visible = true;
+                startbutton.Enabled = true;
+
+                timer1.Stop();
+                timer2.Stop();
+                timer3.Stop();
+                time1left = 0;
+                time2left = 0;
+                time3left = 0;
+                gameend = false;
+                collision = false;
+                //Application.ExitThread();
             }
+
 
         }
 
         private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void timer3_Tick_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void meteor_Click(object sender, EventArgs e)
         {
 
         }

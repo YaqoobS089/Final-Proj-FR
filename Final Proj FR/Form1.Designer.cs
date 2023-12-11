@@ -172,14 +172,15 @@
             // 
             meteor.BackColor = Color.Transparent;
             meteor.ErrorImage = null;
-            meteor.Image = Properties.Resources._109593122_meteor_on_fire_cartoon_in_black_and_white_vector_illustration_graphic_design_removebg_preview;
+            meteor.Image = (Image)resources.GetObject("meteor.Image");
             meteor.InitialImage = (Image)resources.GetObject("meteor.InitialImage");
             meteor.Location = new Point(654, 290);
             meteor.Name = "meteor";
-            meteor.Size = new Size(109, 96);
-            meteor.SizeMode = PictureBoxSizeMode.StretchImage;
+            meteor.Size = new Size(84, 37);
+            meteor.SizeMode = PictureBoxSizeMode.AutoSize;
             meteor.TabIndex = 12;
             meteor.TabStop = false;
+            meteor.Click += meteor_Click;
             // 
             // EXITbutton
             // 
@@ -216,10 +217,14 @@
             label1.AutoSize = true;
             label1.Location = new Point(654, 17);
             label1.Name = "label1";
-            label1.Size = new Size(59, 25);
+            label1.Size = new Size(135, 25);
             label1.TabIndex = 14;
-            label1.Text = "label1";
+            label1.Text = "Time elapsed: 0";
             label1.Click += label1_Click;
+            // 
+            // timer3
+            // 
+            timer3.Tick += timer3_Tick;
             // 
             // Form1
             // 
